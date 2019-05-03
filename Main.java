@@ -26,9 +26,15 @@ public class Main {
     public static void main(String args[]) {
 
         LinkedListStack linkedListStack = new LinkedListStack();
-        linkedListStack.push(new Node("apple"));
-        linkedListStack.push(new Node("banana"));
-        linkedListStack.push(new Node("cherry"));
+        /*
+        try {
+            linkedListStack.push(new Node("apple"));
+            linkedListStack.push(new Node("banana"));
+            linkedListStack.push(new Node("cherry"));
+        }
+        catch (Exception e) {
+            System.out.println(e);
+        }*/
 
         typeDelayEffect(
             10, 
@@ -51,10 +57,17 @@ public class Main {
         String input = "";
         String[] inputArr;
 
+        System.out.print("Enter Stack Size (enter infinite for unlimited size or a number for a fixed size): ");
+        input = (new Scanner(System.in)).nextLine();
+        if (!input.equals("infinite")) {
+            linkedListStack.setMaxSize(Integer.parseInt(input));
+        }
+
         while (!input.equals("-1")) {
             System.out.print("Enter Command: ");
             input = (new Scanner(System.in)).nextLine();
             inputArr = input.split(" ");
+            if (input.equals("-1")) { return; }
             if (inputArr.length == 1) {
                 if (inputArr[0].equals("peek")) {
                     try {
@@ -84,7 +97,12 @@ public class Main {
             }
             else if (inputArr.length == 2){
                 if (inputArr[0].equals("push")) {
-                    linkedListStack.push(new Node(inputArr[1]));
+                    try {
+                        linkedListStack.push(new Node(inputArr[1]));
+                    }
+                    catch(Exception e) {
+                        System.out.println(e);
+                    }
                 }
                 else if (inputArr[0].equals("search")) {
                     System.out.println(linkedListStack.search(inputArr[1]));
@@ -94,9 +112,7 @@ public class Main {
                 }
             }
             else {
-                if (!input.equals("-1")) {
-                    System.out.println("command not recognized");
-                }
+                System.out.println("command not recognized");
             }
             
         }

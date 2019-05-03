@@ -1,7 +1,9 @@
 public class LinkedListStack {
-    private Node head = null;
-    
 
+    private Node head = null;
+    private boolean hasMaxSize = false;
+    private int maxSize;
+    
     public LinkedListStack() { }
 
     public boolean empty() {
@@ -9,11 +11,14 @@ public class LinkedListStack {
     }
 
     // Add new Node to end of list.
-    public void push(Node next) {
+    public void push(Node next) throws Exception {
         if (empty()) {
             head = next;
         }
         else {
+            if (hasMaxSize && maxSize == getSize())  {
+                throw new Exception("STACK SIZE EXCEEDED");
+            }
             Node trav = head;
             while (trav.getNext() != null) {
                 trav = trav.getNext();
@@ -91,6 +96,26 @@ public class LinkedListStack {
             }
             System.out.printf("NODE INDEX: %d NODE DATA: %s\n", index, trav.getData());
         }
+    }
+
+    public int getSize() {
+        if (empty()) {
+            return 0;
+        }
+        else {
+            int count = 1;
+            Node trav = head;
+            while (trav.getNext() != null) {
+                trav = trav.getNext();
+                count++;
+            }
+            return count;
+        }
+    }
+
+    public void setMaxSize(int maxSize) {
+        hasMaxSize = true;
+        this.maxSize = maxSize;
     }
 
 }
